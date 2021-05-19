@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>FoodNutrition</name>
+    </assembly>
+    <members>
+        <member name="M:FoodNutrition.Controllers.CategoryController.GetAllCategories">
+            <summary>
+            Get all categories
+            </summary>
+            <response code="200">Found </response>
+            <response code="400">Not found</response>
+            <returns></returns>
+        </member>
+        <member name="M:FoodNutrition.Controllers.CategoryController.GetCategoryById(System.Int32)">
+            <summary>
+            Get foods in category
+            </summary>
+            <param name="id">Category's id</param>
+            <response code="200">Found</response>
+            <response code="400">Not found</response>
+            <returns></returns>
+        </member>
+        <member name="M:FoodNutrition.Controllers.FoodController.SearchFoodByName(System.String)">
+            <summary>
+            Search food by name
+            </summary>
+            <param name="name">Food's name</param>
+            <response code="200">Found</response>
+            <response code="400">Not found</response>
+            <returns></returns>
+        </member>
+        <member name="M:FoodNutrition.Controllers.FoodController.GetFoodById(System.Int32)">
+            <summary>
+            Get food by id
+            </summary>
+            <param name="id">Food's id</param>
+            <response code="200">Found</response>
+            <response code="400">Not found</response>
+            <returns></returns>
+        </member>
+        <member name="M:FoodNutrition.Controllers.FoodController.CalculateFoodPortion(FoodNutrition.Data.DTO.Request.FoodNutrientPortion)">
+            <summary>
+            Calculate nutrient
+            </summary>
+            <response code="200">Success</response>
+            <response code="400">Error</response>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

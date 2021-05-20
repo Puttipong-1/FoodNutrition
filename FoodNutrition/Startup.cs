@@ -1,4 +1,5 @@
 using FoodNutrition.Data;
+using FoodNutrition.Helper;
 using FoodNutrition.Service;
 using FoodNutrition.Service.Impl;
 using Microsoft.AspNetCore.Builder;
@@ -60,7 +61,8 @@ namespace FoodNutrition
                 opt.UseNpgsql(Configuration.GetConnectionString("postgres"));
                 opt.EnableSensitiveDataLogging();
             });
-            
+            services.Configure<JwtSetting>(Configuration.GetSection("JWT"));
+            services.AddScoped<IAdminService, AdminService>();
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<IFoodService, FoodService>();
             services.AddScoped<IUSDAService, USDAService>();
@@ -88,7 +90,8 @@ namespace FoodNutrition
             app.UseCors(x => x
                .AllowAnyOrigin()
                .AllowAnyMethod()
-               .AllowAnyHeader());  
+               .AllowAnyHeader());
+            app.UseMiddleware<JwtMiddleware>();
             app.UseHttpsRedirection();
 
             app.UseRouting();

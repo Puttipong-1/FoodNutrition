@@ -11,6 +11,7 @@
 
   <ItemGroup>
     <PackageReference Include="Isopoh.Cryptography.Argon2" Version="1.1.10" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.15" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="5.0.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="5.0.5" />
@@ -18,6 +19,7 @@
     <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="6.1.4" />
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="6.1.4" />
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="6.1.4" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.11.0" />
     <PackageReference Include="System.Text.Json" Version="5.0.2" />
   </ItemGroup>
 

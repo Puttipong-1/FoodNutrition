@@ -1,20 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
-namespace FoodNutrition.Data.Model
+namespace FoodNutrition.Data.DTO.Request
 {
-    public class Admin
+    public class AuthenticateRequest
     {
-        [Key,DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int AdminId { get; set; }
-        [Required]
-        [JsonPropertyName("name")]
-        public string Name { get; set; }
         [Required]
         [JsonPropertyName("email")]
         public string Email { get; set; }

@@ -1,4 +1,5 @@
 ﻿using FoodNutrition.Data.DTO.USDA;
+using FoodNutrition.Helper;
 using FoodNutrition.Service;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -19,6 +20,7 @@ namespace FoodNutrition.Controllers
         {
             usdaService = _usdaService;
         }
+        [Authorize]
         [HttpPost, Route("addAttribute")]
         public async Task<ActionResult> AddAttributes([FromBody] List<Data.DTO.USDA.Attribute> attributes)
         {
@@ -32,6 +34,7 @@ namespace FoodNutrition.Controllers
                 return BadRequest(e.Message);
             }
         }
+        [Authorize]
         [HttpPost,Route("addCategory")]
         public async Task<ActionResult> AddCategories([FromBody]List<Category> categories)
         {
@@ -44,6 +47,7 @@ namespace FoodNutrition.Controllers
                 return BadRequest(e.Message);
             }
         }
+        [Authorize]
         [HttpPost, Route("addFood")]
         public async Task<ActionResult> AddFoods([FromBody] List<Food> foods)
         {
@@ -57,6 +61,7 @@ namespace FoodNutrition.Controllers
                 return BadRequest(e.Message);
             }
         }
+        [Authorize]
         [HttpPost, Route("addFoodNutrient")]
         public async Task<ActionResult> AddFoodNutrients([FromBody] List<FoodNutrient> foodNutrients)
         {
@@ -70,6 +75,7 @@ namespace FoodNutrition.Controllers
                 return BadRequest(e.Message);
             }
         }
+        [Authorize]
         [HttpPost, Route("addNutrient")]
         public async Task<ActionResult> AddNutrint([FromBody] List<Nutrient> nutrients)
         {
@@ -83,6 +89,7 @@ namespace FoodNutrition.Controllers
                 return BadRequest(e.Message);
             }
         }
+        [Authorize]
         [HttpPost, Route("addPortion")]
         public async Task<ActionResult> AddPortion([FromBody] List<Portion> portions)
         {

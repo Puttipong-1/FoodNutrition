@@ -9,7 +9,9 @@ namespace FoodNutrition.Data
 {
     public class ApplicationDbContext:DbContext
     {
-        public ApplicationDbContext(DbContextOptions options) : base(options) { }
+        public ApplicationDbContext(DbContextOptions options) : base(options) {
+            this.ChangeTracker.LazyLoadingEnabled = false;
+        }
         public DbSet<Admin> Admins { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Food> Foods { get; set; }

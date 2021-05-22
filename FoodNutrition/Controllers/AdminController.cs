@@ -25,8 +25,9 @@ namespace FoodNutrition.Controllers
         {
             try
             {
-                await adminService.AddAmin(admin);
-                return Ok("Add successful");
+                bool flag=await adminService.AddAmin(admin);
+                if (flag) return Ok("Add successful");
+                else return Ok("Email already use");
             }catch(Exception e)
             {
                 return BadRequest(e.Message);
@@ -38,7 +39,8 @@ namespace FoodNutrition.Controllers
             try
             {
                 AuthenticateResponse response = await adminService.Authenticate(request);
-                return Ok(response);
+                if (response is null) return Ok("Email or Password incorrect");
+                else return Ok(response);
             }catch(Exception e)
             {
                 return BadRequest(e.Message);

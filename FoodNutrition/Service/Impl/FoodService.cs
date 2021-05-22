@@ -2,6 +2,7 @@
 using FoodNutrition.Data.DTO.Request;
 using FoodNutrition.Data.DTO.Response;
 using FoodNutrition.Data.Model;
+using FoodNutrition.Data.Repository;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -12,71 +13,35 @@ namespace FoodNutrition.Service.Impl
 {
     public class FoodService : IFoodService
     {
-        private readonly ApplicationDbContext dbContext;
-        public FoodService(ApplicationDbContext _dbContext)
+        private readonly IFoodRepository foodRepository;
+        public FoodService(IFoodRepository _foodRepository)
         {
-            dbContext = _dbContext;
+            foodRepository = _foodRepository;
         }
-        public async Task<FoodNutrientResult> CalculateFoodNutrient(FoodNutrientPortion foodNutrientPortion)
+        public async Task<FoodNutrientResult> CalculateFoodNutrient(FoodNutrientPortion fnp)
         {
-            try
-            {
-                Food food = await dbContext.Foods
-                    .Where(f => f.FoodId == foodNutrientPortion.FoodId)
-                    .Include(f=>f.Portion.Where(p=>p.PortionId==foodNutrientPortion.PortionId))
-                    .Include(f=>f.FoodNutrients)
-                    .ThenInclude(f=>f.Nutrient)
-                    .SingleAsync();
-                return new FoodNutrientResult(foodNutrientPortion,food);
-
-            }
-            catch (Exception e)
-            {
-                throw;
-            }
+                Food food = await foodRepository.GetFoodByIdAndPortion(fnp.FoodId, fnp.PortionId);
+                if (food is null) return null;
+                return new FoodNutrientResult(fnp,food);
         }
 
         public async Task<FoodResult> GetFoodById(int id)
         {
-            try
-            {
-                Food food = await dbContext.Foods
-                    .Where(f => f.FoodId == id)
-                    .Include(f => f.Category)
-                    .Include(f => f.FoodAttributes)
-                    .Include(f => f.FoodNutrients)
-                    .ThenInclude(f => f.Nutrient)
-                    .Include(f=>f.Portion)
-                    .SingleAsync();
-                return new FoodResult(food);
-            }catch(Exception e)
-            {
-                throw;
-            }
+            Food food = await foodRepository.GetFoodById(id);
+            if (food is null) return null;
+            return new FoodResult(food);
         }
 
         public async Task<List<SearchResult>> SearchByFoodName(string name)
         {
-            try
+            List<Food> foods = await foodRepository.GetFoodsByName(name);
+            if (foods is null && !foods.Any()) return null;
+            List<SearchResult> searches=new List<SearchResult>();
+            foreach(Food f in foods)
             {
-                List<Food> foods = await dbContext.Foods
-                    .Where(f => f.Name.ToLower().Contains(name))
-                    .Include(f=>f.Category)
-                    .Include(f=>f.FoodAttributes)
-                    .ToListAsync();
-                List<SearchResult> searches=new List<SearchResult>();
-                if (foods != null && foods.Any())
-                {
-                    foreach(Food f in foods)
-                    {
-                        searches.Add(new SearchResult(f));
-                    }
-                }
-                return searches;
-            }catch(Exception e)
-            {
-                throw;
+                searches.Add(new SearchResult(f));
             }
+            return searches;
         }
     }
 }

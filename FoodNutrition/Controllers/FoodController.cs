@@ -27,6 +27,7 @@ namespace FoodNutrition.Controllers
         /// <response code="400">Not found</response>
         /// <returns></returns>
         [HttpPost,Route("search/{name}")]
+        [ProducesResponseType(typeof(List<SearchResult>), 200)]
         public async Task<ActionResult> SearchFoodByName(string name)
         {
             try
@@ -46,11 +47,13 @@ namespace FoodNutrition.Controllers
         /// <response code="400">Not found</response>
         /// <returns></returns>
         [HttpPost, Route("id/{id}")]
+        [ProducesResponseType(typeof(FoodResult), 200)]
         public async Task<ActionResult> GetFoodById(int id)
         {
             try
             {
                 FoodResult food = await foodService.GetFoodById(id);
+                if (food is null) return BadRequest("Food not found");
                 return Ok(food);
             }
             catch (Exception e)
@@ -65,11 +68,13 @@ namespace FoodNutrition.Controllers
         /// <response code="400">Error</response>
         /// <returns></returns>
         [HttpPost, Route("calculate")]
+        [ProducesResponseType(typeof(List<FoodNutrientResult>), 200)]
         public async Task<ActionResult> CalculateFoodPortion([FromBody] FoodNutrientPortion fnp)
         {
             try
             {
                 FoodNutrientResult result = await foodService.CalculateFoodNutrient(fnp);
+                if (result is null) return BadRequest("Food not found");
                 return Ok(result);
             }
             catch (Exception e)

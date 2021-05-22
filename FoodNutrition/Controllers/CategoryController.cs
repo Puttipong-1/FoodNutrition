@@ -25,6 +25,7 @@ namespace FoodNutrition.Controllers
         /// <response code="400">Not found</response>
         /// <returns></returns>
         [HttpPost,Route("all")]
+        [ProducesResponseType(typeof(List<Category>),200)]
         public async Task<ActionResult> GetAllCategories()
         {
             try
@@ -43,12 +44,14 @@ namespace FoodNutrition.Controllers
         /// <response code="200">Found</response>
         /// <response code="400">Not found</response>
         /// <returns></returns>
-        [HttpPost,Route("{id:int}")]
-        public async Task<ActionResult> GetCategoryById(int id)
+        [HttpPost,Route("{code:int}")]
+        [ProducesResponseType(typeof(List<SearchResult>), 200)]
+        public async Task<ActionResult> GetCategoryByCode(int code)
         {
             try
             {
-                List<SearchResult> searches = await categoryService.GetFoodsinCategory(id);
+                List<SearchResult> searches = await categoryService.GetFoodsinCategory(code);
+                if (searches is null) return BadRequest("Category is not found"); 
                 return Ok(searches);
             }
             catch (Exception e)

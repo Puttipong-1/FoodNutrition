@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30907.101
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FoodNutrition", "FoodNutrition\FoodNutrition.csproj", "{E0472AE6-E588-4E7B-950C-8D997F7FD7EF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FoodNutrition", "FoodNutrition\FoodNutrition.csproj", "{E0472AE6-E588-4E7B-950C-8D997F7FD7EF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NUnitTest", "NUnitTest\NUnitTest.csproj", "{E987FD22-B5AA-417F-8B35-B56BD6FB16F9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{E0472AE6-E588-4E7B-950C-8D997F7FD7EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E0472AE6-E588-4E7B-950C-8D997F7FD7EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E0472AE6-E588-4E7B-950C-8D997F7FD7EF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E987FD22-B5AA-417F-8B35-B56BD6FB16F9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E987FD22-B5AA-417F-8B35-B56BD6FB16F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E987FD22-B5AA-417F-8B35-B56BD6FB16F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E987FD22-B5AA-417F-8B35-B56BD6FB16F9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

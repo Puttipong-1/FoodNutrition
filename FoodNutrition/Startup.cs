@@ -1,4 +1,6 @@
 using FoodNutrition.Data;
+using FoodNutrition.Data.Repository;
+using FoodNutrition.Data.Repository.Impl;
 using FoodNutrition.Helper;
 using FoodNutrition.Service;
 using FoodNutrition.Service.Impl;
@@ -62,10 +64,20 @@ namespace FoodNutrition
                 opt.EnableSensitiveDataLogging();
             });
             services.Configure<JwtSetting>(Configuration.GetSection("JWT"));
-            services.AddScoped<IAdminService, AdminService>();
-            services.AddScoped<ICategoryService, CategoryService>();
-            services.AddScoped<IFoodService, FoodService>();
-            services.AddScoped<IUSDAService, USDAService>();
+            //Repository
+            services.AddTransient(typeof(IRepositoryBase<>), typeof(RepositoryBase<>));
+            services.AddTransient<IAdminRepository, AdminRepository>();
+            services.AddTransient<ICategoryRepository,CategoryRepository>();
+            services.AddTransient<IFoodAttributeRepository, FoodAttributeRepository>();
+            services.AddTransient<IFoodNutrientRepository, FoodNutrientRepository>();
+            services.AddTransient<IFoodRepository, FoodRepository>();
+            services.AddTransient<INutrientRepository, NutrientRepository>();
+            services.AddTransient<IPortionRepository, PortionRepository>();
+            //Service
+            services.AddTransient<IAdminService, AdminService>();
+            services.AddTransient<ICategoryService, CategoryService>();
+            services.AddTransient<IFoodService, FoodService>();
+            services.AddTransient<IUSDAService, USDAService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

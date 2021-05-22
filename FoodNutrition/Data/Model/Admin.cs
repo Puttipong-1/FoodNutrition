@@ -21,5 +21,6 @@ namespace FoodNutrition.Data.Model
         [Required]
         [JsonPropertyName("password")]
         public string Password { get; set; }
+        public Admin() { }
     }
 }

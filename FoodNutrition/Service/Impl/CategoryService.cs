@@ -1,6 +1,7 @@
 ﻿using FoodNutrition.Data;
 using FoodNutrition.Data.DTO.Response;
 using FoodNutrition.Data.Model;
+using FoodNutrition.Data.Repository;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -11,48 +12,30 @@ namespace FoodNutrition.Service.Impl
 {
     public class CategoryService : ICategoryService
     {
-        private readonly ApplicationDbContext dbContext;
-        public CategoryService(ApplicationDbContext _dbContext)
+        private readonly ICategoryRepository categoryRepository;
+        public CategoryService(ICategoryRepository _categoryRepository)
         {
-            dbContext = _dbContext;
+            categoryRepository = _categoryRepository;
         }
         public async Task<List<Category>> GetAllCategories()
         {
-            try
-            {
-                return await dbContext.Categories
-                    .OrderBy(c => c.Code)
-                    .ToListAsync();
-            }catch(Exception e)
-            {
-                throw;
-            }
+            return await categoryRepository.GetAllCategory();
         }
 
         public async Task<List<SearchResult>> GetFoodsinCategory(int code)
         {
-            try
+            Category category = await categoryRepository.GetCategoryByCode(code);
+            if (category == null) return null;
+            List<SearchResult> searches = new List<SearchResult>();
+            if (category.Foods != null && category.Foods.Any())
             {
-                Category category = await dbContext.Categories
-                    .Where(c => c.Code == code)
-                    .Include(c => c.Foods)
-                    .ThenInclude(f => f.FoodAttributes)
-                    .SingleAsync();
-                List<SearchResult> searches = new List<SearchResult>();
-                if (category.Foods != null && category.Foods.Any())
+                foreach (Food f in category.Foods)
                 {
-                    foreach (Food f in category.Foods)
-                    {
-                        searches.Add(new SearchResult(f,category));
-                    }
-                    return searches;
+                    searches.Add(new SearchResult(f, category));
                 }
                 return searches;
             }
-            catch (Exception e)
-            {
-                throw;
-            }
+            return searches;
         }
     }
 }

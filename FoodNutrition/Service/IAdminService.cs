@@ -9,7 +9,7 @@ namespace FoodNutrition.Service
 {
     public interface IAdminService
     {
-        Task AddAmin(Admin admin);
+        Task<bool> AddAmin(Admin admin);
         Task<AuthenticateResponse> Authenticate(AuthenticateRequest request);
         Admin GetById(int id);
     }

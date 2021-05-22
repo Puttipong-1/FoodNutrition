@@ -21,7 +21,7 @@ namespace FoodNutrition.Data.DTO.Response
             double gram = 1.0;
             Amount = fnp.Amount;
             Nutrients = new List<Nutrients>();
-            if(food.Portion is null)
+            if(food.Portion is null||food.Portion.Any()==false)
             {
                 Portion = "100 g";  
             }

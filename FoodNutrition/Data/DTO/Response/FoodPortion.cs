@@ -9,6 +9,6 @@ namespace FoodNutrition.Data.DTO.Response
     {
         public string FoodId { get; set; }
         public string Name { get; set; }
-        public List<Portion> Portions { get; set; }
+        public List<Portions> Portions { get; set; }
     }
 }

@@ -23,7 +23,8 @@ namespace FoodNutrition.Data.DTO.Response
             Nutrients = new List<Nutrients>();
             if(food.Portion is null||food.Portion.Any()==false)
             {
-                Portion = "100 g";  
+                Portion = "100 g";
+                gram = gram * Amount;
             }
             else
             {

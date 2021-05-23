@@ -48,6 +48,7 @@ namespace FoodNutrition.Controllers
         /// <returns></returns>
         [HttpPost, Route("id/{id}")]
         [ProducesResponseType(typeof(FoodResult), 200)]
+        [ProducesResponseType(typeof(string),400)]
         public async Task<ActionResult> GetFoodById(int id)
         {
             try

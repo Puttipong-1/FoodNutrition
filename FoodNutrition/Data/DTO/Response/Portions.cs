@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace FoodNutrition.Data.DTO.Response
 {
-    public class Portion
+    public class Portions
     {
         public int PortionId { get; set; }
         public string Amount { get; set; }
         public string Description { get; set; }
         public double Gram { get; set; }
-        public Portion() { }
-        public Portion(Model.Portion p)
+        public Portions() { }
+        public Portions(Model.Portion p)
         {
             PortionId = p.PortionId;
             Amount = p.Amount;

@@ -35,7 +35,7 @@ namespace FoodNutrition.Service.Impl
         public async Task<List<SearchResult>> SearchByFoodName(string name)
         {
             List<Food> foods = await foodRepository.GetFoodsByName(name);
-            if (foods is null && !foods.Any()) return null;
+            if (foods.Count==0) return null;
             List<SearchResult> searches=new List<SearchResult>();
             foreach(Food f in foods)
             {

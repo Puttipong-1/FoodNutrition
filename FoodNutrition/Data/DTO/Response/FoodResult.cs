@@ -13,7 +13,7 @@ namespace FoodNutrition.Data.DTO.Response
         public string Category { get; set; }
         public string Attribute { get; set; }
         public List<Nutrients> Nutrients { get; set; }
-        public List<Portion> Portions { get; set; }
+        public List<Portions> Portions { get; set; }
         public FoodResult() { }
         public FoodResult(Food food) {
             FoodId = food.FoodId;
@@ -31,12 +31,12 @@ namespace FoodNutrition.Data.DTO.Response
                     Nutrients.Add(new Nutrients(f));
                 }
             }
-            Portions = new List<Portion>();
+            Portions = new List<Portions>();
             if (food.Portion != null && food.Portion.Any())
             {
                 foreach(var p in food.Portion)
                 {
-                    Portions.Add(new Portion(p));
+                    Portions.Add(new Portions(p));
                 }
             }
         

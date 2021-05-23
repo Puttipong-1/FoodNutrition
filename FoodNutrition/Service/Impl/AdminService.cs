@@ -1,5 +1,6 @@
 ﻿using FoodNutrition.Data;
 using FoodNutrition.Data.DTO.Request;
+using FoodNutrition.Data.DTO.Response;
 using FoodNutrition.Data.Model;
 using FoodNutrition.Data.Repository;
 using FoodNutrition.Helper;
@@ -42,8 +43,7 @@ namespace FoodNutrition.Service.Impl
         public async Task<AuthenticateResponse> Authenticate(AuthenticateRequest request)
         {
                 Admin admin = await adminRepository.GetByEmail(request.Email);
-                if (admin is null) return null;
-                if (!Argon2.Verify(admin.Password, request.Password)) throw new Exception("Password in correct");
+                if (admin is null|| !Argon2.Verify(admin.Password, request.Password)) return null;
                 string token = GenerateJwtToken(admin);
                 return new AuthenticateResponse(admin, token);
         }

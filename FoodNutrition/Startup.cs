@@ -37,7 +37,7 @@ namespace FoodNutrition
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSwaggerGen(x => {
-                x.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
+                /*x.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
                 {
                     Version = "v1",
                     Title = "Food Nutrient API",
@@ -51,7 +51,7 @@ namespace FoodNutrition
                 });
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-                x.IncludeXmlComments(xmlPath, includeControllerXmlComments: true);
+                x.IncludeXmlComments(xmlPath, includeControllerXmlComments: true);*/
             });
             services.AddControllers()
                 .AddJsonOptions(options =>
@@ -92,13 +92,13 @@ namespace FoodNutrition
                 var context = serviceScope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
                 context.Database.EnsureCreated();
             }
-            app.UseAuthentication();
             app.UseSwagger();
             app.UseSwaggerUI(x =>
             {
                 x.SwaggerEndpoint("/swagger/v1/swagger.json", "API");
                 x.RoutePrefix = string.Empty;
             });
+            app.UseAuthentication();
             app.UseCors(x => x
                .AllowAnyOrigin()
                .AllowAnyMethod()

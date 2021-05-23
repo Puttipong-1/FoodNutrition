@@ -1,4 +1,5 @@
 ﻿using FoodNutrition.Data.DTO.Request;
+using FoodNutrition.Data.DTO.Response;
 using FoodNutrition.Data.Model;
 using FoodNutrition.Helper;
 using FoodNutrition.Service;
@@ -10,6 +11,8 @@ using System.Threading.Tasks;
 
 namespace FoodNutrition.Controllers
 {
+
+    [ApiExplorerSettings(IgnoreApi = true)]
     [ApiController]
     [Route("api/admin/")]
     public class AdminController:ControllerBase

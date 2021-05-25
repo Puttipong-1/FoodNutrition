@@ -17,4 +17,8 @@
     <ProjectReference Include="..\FoodNutrition\FoodNutrition.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="ControllerTest\IntegrationTest\" />
+  </ItemGroup>
+
 </Project>

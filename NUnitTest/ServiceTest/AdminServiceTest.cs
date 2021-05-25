@@ -10,6 +10,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Moq;
 using NUnit.Framework;
+using NUnitTest.Helper;
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
@@ -103,7 +104,7 @@ namespace NUnitTest.ServiceTest
             mockAdminRepository.Setup(x=>x.GetByEmail(It.IsAny<string>()))
                 .ReturnsAsync(admin);
             AuthenticateResponse response = await adminService.Authenticate(request);
-            JwtSecurityToken token = ValidaeJwtToken(response.Token);
+            JwtSecurityToken token = JwtHelper.ValidateJwtToken(response.Token);
             int id = int.Parse(token.Claims.First(x => x.Type == "id").Value);
             long exp = long.Parse(token.Claims.First(x => x.Type == "exp").Value);
             DateTime expire = DateTimeOffset.FromUnixTimeMilliseconds(exp / 1000).DateTime;
@@ -113,7 +114,6 @@ namespace NUnitTest.ServiceTest
             Assert.AreEqual(admin.AdminId, id);
             Assert.Less(DateTime.UtcNow.AddDays(7).CompareTo(expire),3);
         }
-        //Admin authenticate fail(Email not found)
         [Test]
         public async Task AdminAuthFail1()
         {
@@ -126,7 +126,7 @@ namespace NUnitTest.ServiceTest
             Admin admin = GetFakeAdmin();
 
             mockAdminRepository.Setup(x => x.GetByEmail(It.IsAny<string>()))
-                .ReturnsAsync((Admin) null);
+                .ReturnsAsync((Admin)null);
             AuthenticateResponse response = await adminService.Authenticate(request);
 
             Assert.IsNull(response);
@@ -149,6 +149,7 @@ namespace NUnitTest.ServiceTest
 
             Assert.IsNull(response);
         }
+
         private Admin GetFakeAdmin()
         {
             return new Admin
@@ -158,20 +159,6 @@ namespace NUnitTest.ServiceTest
                 Email = "admin@gmail.com",
                 Password = Argon2.Hash("12345678")
             };
-        }
-        private JwtSecurityToken ValidaeJwtToken(string token)
-        {
-            JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();
-            byte[] key = Encoding.ASCII.GetBytes(setting.SecretKey);
-            tokenHandler.ValidateToken(token, new Microsoft.IdentityModel.Tokens.TokenValidationParameters
-            {
-                ValidateIssuerSigningKey = true,
-                IssuerSigningKey = new SymmetricSecurityKey(key),
-                ValidateIssuer = false,
-                ValidateAudience = false,
-                ClockSkew = TimeSpan.Zero
-            }, out SecurityToken validateToken);
-            return (JwtSecurityToken)validateToken;
         }
     }
 }

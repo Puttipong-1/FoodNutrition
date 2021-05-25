@@ -16,7 +16,7 @@ using System.Threading.Tasks;
 using NUnitTest.Helper;
 using System.Linq;
 
-namespace NUnitTest.ControllerTest.UnitTest
+namespace NUnitTest.ControllerTest
 {
     [TestFixture]
     class AdminControllerTest

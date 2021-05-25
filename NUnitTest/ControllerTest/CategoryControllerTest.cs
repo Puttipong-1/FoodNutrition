@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NUnitTest.ControllerTest.UnitTest
+namespace NUnitTest.ControllerTest
 {
     [TestFixture]
     class CategoryControllerTest

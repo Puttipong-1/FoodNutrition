@@ -21,14 +21,14 @@ namespace FoodNutrition.Data.DTO.Response
             double gram = 1.0;
             Amount = fnp.Amount;
             Nutrients = new List<Nutrients>();
-            if(food.Portion is null||food.Portion.Any()==false)
+            if(food.Portions is null||food.Portions.Any()==false)
             {
                 Portion = "100 g";
                 gram = gram * Amount;
             }
             else
             {
-                var p = food.Portion[0];
+                var p = food.Portions[0];
                 gram = (p.Gram*Amount) / 100;
                 Portion = $"{p.Amount} {p.Description} ({p.Gram})";
             }

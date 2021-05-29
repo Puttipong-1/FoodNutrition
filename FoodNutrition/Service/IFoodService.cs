@@ -11,7 +11,7 @@ namespace FoodNutrition.Service
     public interface IFoodService
     {
         Task<List<SearchResult>> SearchByFoodName(string name);
-        Task<FoodResult> GetFoodById(int id);
+        Task<Food> GetFoodById(int id);
         Task<FoodNutrientResult> CalculateFoodNutrient(FoodNutrientPortion foodNutrientPortion);
     }
 }

@@ -47,5 +47,14 @@
             <response code="400">Error</response>
             <returns></returns>
         </member>
+        <member name="M:FoodNutrition.Controllers.FoodController.GetFoodNutrientPdf(System.Int32)">
+            <summary>
+            Generate food nutrient pdf.
+            </summary>
+            <param name="id">Food's id</param>
+            <response code="200">Success</response>
+            <response code="400">Error</response>
+            <returns></returns>
+        </member>
     </members>
 </doc>

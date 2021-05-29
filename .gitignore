@@ -340,3 +340,4 @@ ASALocalRun/
 healthchecksdb
 #Exclude
 /FoodNutrition/appsettings.json
+/frontend

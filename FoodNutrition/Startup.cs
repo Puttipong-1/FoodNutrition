@@ -77,6 +77,7 @@ namespace FoodNutrition
             services.AddTransient<IAdminService, AdminService>();
             services.AddTransient<ICategoryService, CategoryService>();
             services.AddTransient<IFoodService, FoodService>();
+            services.AddTransient<IPdfService, PdfService>();
             services.AddTransient<IUSDAService, USDAService>();
         }
 

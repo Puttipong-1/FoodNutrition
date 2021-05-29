@@ -32,9 +32,9 @@ namespace FoodNutrition.Data.DTO.Response
                 }
             }
             Portions = new List<Portions>();
-            if (food.Portion != null && food.Portion.Any())
+            if (food.Portions != null && food.Portions.Any())
             {
-                foreach(var p in food.Portion)
+                foreach(var p in food.Portions)
                 {
                     Portions.Add(new Portions(p));
                 }

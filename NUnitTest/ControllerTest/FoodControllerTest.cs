@@ -1,6 +1,7 @@
 ﻿using FoodNutrition.Controllers;
 using FoodNutrition.Data.DTO.Request;
 using FoodNutrition.Data.DTO.Response;
+using FoodNutrition.Data.Model;
 using FoodNutrition.Service;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
@@ -17,11 +18,13 @@ namespace NUnitTest.ControllerTest
     {
         private FoodController foodController;
         private Mock<IFoodService> mockFoodService;
+        private Mock<IPdfService> mockPdfService;
         [OneTimeSetUp]
         public void Setup()
         {
             mockFoodService = new Mock<IFoodService>(MockBehavior.Strict);
-            foodController = new FoodController(mockFoodService.Object);
+            mockPdfService = new Mock<IPdfService>(MockBehavior.Strict);
+            foodController = new FoodController(mockFoodService.Object,mockPdfService.Object);
         }
         [Test]
         public async Task SearchFoodSuccess()
@@ -53,7 +56,7 @@ namespace NUnitTest.ControllerTest
         public async Task GetFoodByIdSuccess()
         {
             mockFoodService.Setup(x => x.GetFoodById(It.IsAny<int>()))
-                .ReturnsAsync(GetFakeFoodResult());
+                .ReturnsAsync(GetFakeFood());
 
             var actionResult = await foodController.GetFoodById(1);
 
@@ -62,14 +65,14 @@ namespace NUnitTest.ControllerTest
             var food = (FoodResult)result.Value;
             Assert.AreEqual(1, food.FoodId);
             Assert.AreEqual("steak", food.Name);
-            Assert.AreEqual(3, food.Nutrients.Count);
-            Assert.AreEqual(2, food.Portions.Count);
+            Assert.AreEqual(2, food.Nutrients.Count);
+            Assert.AreEqual(3, food.Portions.Count);
         }
         [Test]
         public async Task GetFoodByIdFail()
         {
             mockFoodService.Setup(x => x.GetFoodById(It.IsAny<int>()))
-                .ReturnsAsync((FoodResult)null);
+                .ReturnsAsync((Food)null);
 
             var actionResult = await foodController.GetFoodById(1);
 
@@ -120,6 +123,38 @@ namespace NUnitTest.ControllerTest
                     new Nutrients { Name = "Sugar", Amount = 55.0, Unit = "g" }
                 },
                 Portion = "14 piece"
+            };
+        }
+        private Food GetFakeFood()
+        {
+            return new Food
+            {
+                FoodId = 1,
+                Name = "steak",
+                Category = new Category
+                {
+                    CategoryId = 1,
+                    Code = 100,
+                    Description = "Desc"
+                },
+                FoodAttributes = new List<FoodAttribute>
+                {
+                    new FoodAttribute { FoodAttributeId = 1, FoodId = 1, SeqNum = 0, Value = "test" }
+                },
+                Portions = new List<Portion>
+                {
+                    new Portion { PortionId = 1, FoodId = 1, Amount = "15.5", Description = "abcd", Gram = 15.1 },
+                    new Portion { PortionId = 1, FoodId = 1, Amount = "15.5", Description = "abc25", Gram = 20.1 },
+                    new Portion { PortionId = 1, FoodId = 1, Amount = "15.5", Description = "52", Gram = 85.1 }
+                },
+                FoodNutrients = new List<FoodNutrient>
+                {
+                    new FoodNutrient{FoodNutrientId=1,FoodId=1,Amount=10.0,NutrientId=1,
+                        Nutrient=new Nutrient{NutrientId=1,Name="A",Unit="G"} },
+                    new FoodNutrient{FoodNutrientId=2,FoodId=1,Amount=20.0,NutrientId=2,
+                        Nutrient=new Nutrient{NutrientId=2,Name="B",Unit="ml"}
+                }
+                }                
             };
         }
         private FoodResult GetFakeFoodResult()

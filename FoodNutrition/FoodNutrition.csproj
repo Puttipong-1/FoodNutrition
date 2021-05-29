@@ -16,6 +16,7 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="5.0.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="5.0.5" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="5.0.5.1" />
+    <PackageReference Include="QuestPDF" Version="2021.5.2" />
     <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="6.1.4" />
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="6.1.4" />
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="6.1.4" />

@@ -17,7 +17,7 @@ namespace FoodNutrition.Data.Model
         public Category Category { get; set; }
         public List<FoodAttribute> FoodAttributes { get; set; }
         public List<FoodNutrient> FoodNutrients { get; set; }
-        public List<Portion> Portion { get; set; }
+        public List<Portion> Portions { get; set; }
         public Food() { }
         public Food(Data.DTO.USDA.Food food)
         {

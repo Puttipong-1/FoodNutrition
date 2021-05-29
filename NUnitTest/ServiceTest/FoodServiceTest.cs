@@ -34,7 +34,7 @@ namespace NUnitTest.ServiceTest
                 .ReturnsAsync(food);
 
             FoodNutrientResult result = await foodService.CalculateFoodNutrient(fnp);
-            double gram = (fnp.Amount*food.Portion[0].Gram)/100;
+            double gram = (fnp.Amount*food.Portions[0].Gram)/100;
 
             Assert.AreEqual(food.FoodId, result.FoodId);
             Assert.AreEqual(food.Name, result.Name);
@@ -51,7 +51,7 @@ namespace NUnitTest.ServiceTest
         {
             Food food = GetFakeFood();
             FoodNutrientPortion fnp = GetFakeFoodNutrientPortion();
-            food.Portion = new List<Portion>();
+            food.Portions = new List<Portion>();
             mockFoodRepository.Setup(x => x.GetFoodByIdAndPortion(It.IsAny<int>(), It.IsAny<int>()))
                 .ReturnsAsync(food);
 
@@ -87,13 +87,13 @@ namespace NUnitTest.ServiceTest
             mockFoodRepository.Setup(x => x.GetFoodById(It.IsAny<int>()))
                 .ReturnsAsync(food);
 
-            FoodResult result = await foodService.GetFoodById(1);
+            Food result = await foodService.GetFoodById(1);
 
             Assert.AreEqual(food.FoodId, result.FoodId);
             Assert.AreEqual(food.Name, result.Name);
-            Assert.AreEqual(food.Category.Description, result.Category);
-            Assert.AreEqual(food.Portion.Count, result.Portions.Count);
-            Assert.AreEqual(food.FoodNutrients.Count, result.Nutrients.Count);
+            Assert.AreEqual(food.Category.Description, result.Category.Description);
+            Assert.AreEqual(food.Portions.Count, result.Portions.Count);
+            Assert.AreEqual(food.FoodNutrients.Count, result.FoodNutrients.Count);
         }
         //Get food by id fail
         [Test]
@@ -102,7 +102,7 @@ namespace NUnitTest.ServiceTest
             mockFoodRepository.Setup(x => x.GetFoodById(It.IsAny<int>()))
                 .ReturnsAsync((Food)null);
 
-            FoodResult result = await foodService.GetFoodById(1);
+            Food result = await foodService.GetFoodById(1);
 
             Assert.IsNull(result);
         }//Search food by name success
@@ -172,7 +172,7 @@ namespace NUnitTest.ServiceTest
                 Category = category,
                 FoodAttributes = foodAttributes,
                 FoodNutrients = foodNutrients,
-                Portion = portions
+                Portions = portions
             };
         }
         private List<Food> GetFakeFoodList()

@@ -25,12 +25,13 @@ namespace FoodNutrition.Service.Impl
                 return new FoodNutrientResult(fnp,food);
         }
 
-        public async Task<FoodResult> GetFoodById(int id)
+        public async Task<Food> GetFoodById(int id)
         {
             Food food = await foodRepository.GetFoodById(id);
             if (food is null) return null;
-            return new FoodResult(food);
+            return food;
         }
+
 
         public async Task<List<SearchResult>> SearchByFoodName(string name)
         {

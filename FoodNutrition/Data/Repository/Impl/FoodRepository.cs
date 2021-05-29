@@ -17,7 +17,7 @@ namespace FoodNutrition.Data.Repository.Impl
                 .Include(f => f.Category)
                 .Include(f => f.FoodNutrients)
                 .ThenInclude(f => f.Nutrient)
-                .Include(f => f.Portion)
+                .Include(f => f.Portions)
                 .FirstOrDefaultAsync();
         }
 
@@ -26,7 +26,7 @@ namespace FoodNutrition.Data.Repository.Impl
             return await GetAll().Where(x => x.FoodId == foodId)
                 .Include(x => x.FoodNutrients)
                 .ThenInclude(x => x.Nutrient)
-                .Include(x => x.Portion.Where(x=>x.PortionId==portionId))
+                .Include(x => x.Portions.Where(x=>x.PortionId==portionId))
                 .FirstOrDefaultAsync();
         }
         public async Task<List<Food>> GetFoodsByName(string name)

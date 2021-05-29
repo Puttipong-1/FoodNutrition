@@ -5,6 +5,7 @@ using FoodNutrition.Service;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -14,10 +15,12 @@ namespace FoodNutrition.Controllers
     [Route("api/food/")]
     public class FoodController:ControllerBase
     {
-        public readonly IFoodService foodService;
-        public FoodController(IFoodService _foodService)
+        private readonly IFoodService foodService;
+        private readonly IPdfService pdfService;
+        public FoodController(IFoodService _foodService,IPdfService _pdfService)
         {
             foodService = _foodService;
+            pdfService = _pdfService;
         }
         /// <summary>
         /// Search food by name
@@ -53,9 +56,9 @@ namespace FoodNutrition.Controllers
         {
             try
             {
-                FoodResult food = await foodService.GetFoodById(id);
+                Food food = await foodService.GetFoodById(id);
                 if (food is null) return BadRequest("Food not found");
-                return Ok(food);
+                return Ok(new FoodResult(food));
             }
             catch (Exception e)
             {
@@ -77,6 +80,30 @@ namespace FoodNutrition.Controllers
                 FoodNutrientResult result = await foodService.CalculateFoodNutrient(fnp);
                 if (result is null) return BadRequest("Food not found");
                 return Ok(result);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+        /// <summary>
+        /// Generate food nutrient pdf.
+        /// </summary>
+        /// <param name="id">Food's id</param>
+        /// <response code="200">Success</response>
+        /// <response code="400">Error</response>
+        /// <returns></returns>
+        [HttpPost, Route("pdf/{id}")]
+        [Produces("application/pdf")]
+        public async Task<ActionResult> GetFoodNutrientPdf(int id)
+        {
+            try
+            {
+                Food food = await foodService.GetFoodById(id);
+                if (food is null) return BadRequest("Food not found");
+                byte[] pdfByte = await pdfService.CreateFoodNutrientPdf(food);
+                MemoryStream ms = new MemoryStream(pdfByte);
+                return new FileStreamResult(ms, "application/pdf");
             }
             catch (Exception e)
             {

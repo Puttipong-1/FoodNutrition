@@ -26,7 +26,7 @@ namespace FoodNutrition.Controllers
         /// Search food by name
         /// </summary>
         /// <param name="name">Food's name</param>
-        /// <response code="200">Found</response>
+        /// <response code="200">Found foods</response>
         /// <response code="400">Not found</response>
         /// <returns></returns>
         [HttpPost,Route("search/{name}")]
@@ -46,7 +46,7 @@ namespace FoodNutrition.Controllers
         /// Get food by id
         /// </summary>
         /// <param name="id">Food's id</param>
-        /// <response code="200">Found</response>
+        /// <response code="200">Found food</response>
         /// <response code="400">Not found</response>
         /// <returns></returns>
         [HttpPost, Route("id/{id}")]
@@ -68,8 +68,8 @@ namespace FoodNutrition.Controllers
         /// <summary>
         /// Calculate nutrient
         /// </summary>
-        /// <response code="200">Success</response>
-        /// <response code="400">Error</response>
+        /// <response code="200">Calculate nutreint success</response>
+        /// <response code="400">Food not found</response>
         /// <returns></returns>
         [HttpPost, Route("calculate")]
         [ProducesResponseType(typeof(List<FoodNutrientResult>), 200)]
@@ -90,8 +90,8 @@ namespace FoodNutrition.Controllers
         /// Generate food nutrient pdf.
         /// </summary>
         /// <param name="id">Food's id</param>
-        /// <response code="200">Success</response>
-        /// <response code="400">Error</response>
+        /// <response code="200">Generate pdf success</response>
+        /// <response code="400">Fail to generate pdf</response>
         /// <returns></returns>
         [HttpPost, Route("pdf/{id}")]
         [Produces("application/pdf")]

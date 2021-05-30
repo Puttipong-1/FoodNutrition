@@ -109,6 +109,32 @@ namespace NUnitTest.ControllerTest
             Assert.AreEqual("Food not found", msg);
 
         }
+        [Test]
+        public async Task GeneratePdfSucces()
+        {
+            mockFoodService.Setup(x => x.GetFoodById(It.IsAny<int>()))
+                .ReturnsAsync(GetFakeFood());
+            mockPdfService.Setup(x => x.CreateFoodNutrientPdf(It.IsAny<Food>()))
+                .ReturnsAsync(new byte[10]);
+            
+            var actionResult = await foodController.GetFoodNutrientPdf(100);
+
+            Assert.IsInstanceOf<FileStreamResult>(actionResult);
+            var result = (FileStreamResult)actionResult;
+            Assert.AreEqual("application/pdf", result.ContentType);
+        }
+        [Test]
+        public async Task GeneratePdfFail()
+        {
+            mockFoodService.Setup(x => x.GetFoodById(It.IsAny<int>()))
+                .ReturnsAsync((Food)null);
+
+            var actionResult = await foodController.GetFoodNutrientPdf(100);
+
+            Assert.IsInstanceOf<BadRequestObjectResult>(actionResult);
+            var result = (BadRequestObjectResult)actionResult;
+            Assert.AreEqual("Food not found", result.Value);
+        }
         private FoodNutrientResult GetFakeFoodNutrientResult()
         {
             return new FoodNutrientResult
